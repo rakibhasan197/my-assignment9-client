@@ -39,7 +39,7 @@ const IdeasCard = ({idea}) => {
 
       <Link href="/ideas">
         <Button color="primary">
-          View Details
+          View all ideas
         </Button>
       </Link>
     </div>
