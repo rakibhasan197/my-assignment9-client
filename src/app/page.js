@@ -1,5 +1,6 @@
-import Banner from "@/components/Banner";
-import FeaturedCard from "@/components/FeaturedCard";
+
+import Banner from "../components/Banner";
+import FeaturedCard from "../components/FeaturedCard";
 import Image from "next/image";
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
    <div>
     <Banner></Banner>
     <FeaturedCard></FeaturedCard>
+      
    </div>
   );
 }

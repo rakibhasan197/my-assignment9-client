@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
 import Link from "next/link";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
@@ -16,19 +17,23 @@ const navLinks = [
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+  const handleLogOut = async () => {
+    await authClient.signOut();
+    setOpen(false);
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
-      
       <nav className="container mx-auto flex items-center justify-between px-4 py-4">
-        
-      
         <Link href="/">
           <h2 className="text-2xl font-black text-white">
             Idea<span className="text-blue-500">Vault</span>
           </h2>
         </Link>
 
-       
         <ul className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
@@ -42,25 +47,43 @@ const Navbar = () => {
           ))}
         </ul>
 
-      
+        {/* Desktop Auth Section */}
         <div className="hidden items-center gap-3 md:flex">
-          <Link href="/login">
-            <Button
-              variant="bordered"
-              className="border-slate-700 text-white"
-            >
-              Login
-            </Button>
-          </Link>
+          {user ? (
+            <>
+                       <Avatar>
+        <Avatar.Image alt="John Doe" src={user?.image} />
+        <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
+      </Avatar>
+              
+              <Button
+              
+                variant="danger"
+                onClick={handleLogOut}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button
+                  variant="bordered"
+                  className="border-slate-700 text-white"
+                >
+                  Login
+                </Button>
+              </Link>
 
-          <Link href="/register">
-            <Button className="bg-blue-600 text-white hover:bg-blue-700">
-              Register
-            </Button>
-          </Link>
+              <Link href="/register">
+                <Button className="bg-blue-600 text-white hover:bg-blue-700">
+                  Register
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
 
-     
         <button
           onClick={() => setOpen(!open)}
           className="text-2xl text-white md:hidden"
@@ -71,7 +94,6 @@ const Navbar = () => {
 
       {open && (
         <div className="border-t border-slate-800 bg-slate-950 md:hidden">
-          
           <ul className="container mx-auto flex flex-col gap-5 px-4 py-5">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -85,22 +107,50 @@ const Navbar = () => {
               </li>
             ))}
 
-            <div className="flex flex-col gap-3 pt-2">
-              <Link href="/login">
-                <Button
-                  variant="bordered"
-                  className="w-full border-slate-700 text-white"
-                >
-                  Login
-                </Button>
-              </Link>
+            {user ? (
+              <>
+                <li>
+                  <div className="flex items-center gap-3">
+                   <Avatar>
+        <Avatar.Image alt="John Doe" src={user?.image} />
+        <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
+      </Avatar>
+                  </div>
+                </li>
 
-              <Link href="/register">
-                <Button className="w-full bg-blue-600 text-white hover:bg-blue-700">
-                  Register
-                </Button>
-              </Link>
-            </div>
+                <li>
+                  <Button
+                    
+                    variant="danger"
+                    onClick={handleLogOut}
+                    className="w-full"
+                  >
+                    Logout
+                  </Button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link href="/login">
+                    <Button
+                      variant="bordered"
+                      className="w-full border-slate-700 text-white"
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                </li>
+
+                <li>
+                  <Link href="/register">
+                    <Button className="w-full bg-blue-600 text-white hover:bg-blue-700">
+                      Register
+                    </Button>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       )}
