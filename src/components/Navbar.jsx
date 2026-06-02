@@ -28,6 +28,7 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
       <nav className="container mx-auto flex items-center justify-between px-4 py-4">
+        
         <Link href="/">
           <h2 className="text-2xl font-black text-white">
             Idea<span className="text-blue-500">Vault</span>
@@ -39,7 +40,7 @@ const Navbar = () => {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-sm font-medium text-slate-300 transition hover:text-blue-400"
+                className="text-sm font-medium text-slate-300 hover:text-blue-400"
               >
                 {link.label}
               </Link>
@@ -47,36 +48,26 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Desktop Auth Section */}
         <div className="hidden items-center gap-3 md:flex">
           {user ? (
             <>
-                       <Avatar>
+                         <Avatar>
         <Avatar.Image alt="John Doe" src={user?.image} />
-        <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
+        <Avatar.Fallback>JD</Avatar.Fallback>
       </Avatar>
-              
-              <Button
-              
-                variant="danger"
-                onClick={handleLogOut}
-              >
+
+              <Button color="danger" onClick={handleLogOut}>
                 Logout
               </Button>
             </>
           ) : (
             <>
               <Link href="/login">
-                <Button
-                  variant="bordered"
-                  className="border-slate-700 text-white"
-                >
-                  Login
-                </Button>
+                <Button variant="primary">Login</Button>
               </Link>
 
               <Link href="/register">
-                <Button className="bg-blue-600 text-white hover:bg-blue-700">
+                <Button className="bg-blue-600 text-white">
                   Register
                 </Button>
               </Link>
@@ -95,13 +86,10 @@ const Navbar = () => {
       {open && (
         <div className="border-t border-slate-800 bg-slate-950 md:hidden">
           <ul className="container mx-auto flex flex-col gap-5 px-4 py-5">
+            
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="block text-sm font-medium text-slate-300 transition hover:text-blue-400"
-                >
+                <Link onClick={() => setOpen(false)} href={link.href}>
                   {link.label}
                 </Link>
               </li>
@@ -109,21 +97,18 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <li>
-                  <div className="flex items-center gap-3">
-                   <Avatar>
+                <li className="flex items-center gap-3">
+                  <Avatar>
         <Avatar.Image alt="John Doe" src={user?.image} />
-        <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
+        <Avatar.Fallback>JD</Avatar.Fallback>
       </Avatar>
-                  </div>
                 </li>
 
                 <li>
                   <Button
-                    
-                    variant="danger"
-                    onClick={handleLogOut}
+                    color="danger"
                     className="w-full"
+                    onClick={handleLogOut}
                   >
                     Logout
                   </Button>
@@ -133,18 +118,13 @@ const Navbar = () => {
               <>
                 <li>
                   <Link href="/login">
-                    <Button
-                      variant="bordered"
-                      className="w-full border-slate-700 text-white"
-                    >
-                      Login
-                    </Button>
+                    <Button className="w-full">Login</Button>
                   </Link>
                 </li>
 
                 <li>
                   <Link href="/register">
-                    <Button className="w-full bg-blue-600 text-white hover:bg-blue-700">
+                    <Button className="w-full bg-blue-600 text-white">
                       Register
                     </Button>
                   </Link>
