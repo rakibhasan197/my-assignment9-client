@@ -51,16 +51,16 @@ export default function SignUpPage() {
     }, 900);
   };
 
-  // const handleGoogleLogin = async () => {
-  //   const { error } = await authClient.signIn.social({
-  //     provider: "google",
-  //     callbackURL: "/",
-  //   });
+  const handleGoogleLogin = async () => {
+    const { error } = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
 
-  //   if (error) {
-  //     toast.error(error.message || "Google login failed");
-  //   }
-  // };
+    if (error) {
+      toast.error(error.message || "Google login failed");
+    }
+  };
 
   return (
     <div className="px-4 py-10">
@@ -133,7 +133,7 @@ export default function SignUpPage() {
             Login
           </Link>
         </p>
-        <Button variant="outline" className="w-full border border-blue-400/40 text-blue-100">
+        <Button onClick={handleGoogleLogin} variant="outline" className="w-full border border-blue-400/40 text-blue-100">
           <FaGoogle /> Continue with Google
         </Button>
       </div>

@@ -52,8 +52,8 @@ const Navbar = () => {
           {user ? (
             <>
                          <Avatar>
-        <Avatar.Image alt="John Doe" src={user?.image} />
-        <Avatar.Fallback>JD</Avatar.Fallback>
+        <Avatar.Image referrerPolicy="no-referrer" alt="John Doe" src={user?.image} />
+        <Avatar.Fallback>{user?.name.charAt(0)}</Avatar.Fallback>
       </Avatar>
 
               <Button color="danger" onClick={handleLogOut}>
