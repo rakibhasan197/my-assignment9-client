@@ -1,3 +1,5 @@
+import CommentForm from "@/components/CommentForm";
+import GetCommentForm from "@/components/GetCommentForm";
 import Image from "next/image";
 
 const fetchIdeaDetails = async (id) => {
@@ -49,6 +51,13 @@ const IdeasDetailsPage = async ({ params }) => {
       <div className="space-y-3">
         <p><b>Problem:</b> {idea.problemStatement}</p>
         <p><b>Solution:</b> {idea.proposedSolution}</p>
+      </div>
+
+      <div>
+        <CommentForm ideaId={idea._id || idea.id || id} />
+      </div>
+      <div>
+        <GetCommentForm></GetCommentForm>
       </div>
 
     </div>
