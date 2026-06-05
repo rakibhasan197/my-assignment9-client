@@ -2,11 +2,13 @@
 
 import { authClient } from "@/lib/auth-client";
 import { Button, TextArea } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function CommentForm({ ideaId }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
@@ -49,6 +51,7 @@ export default function CommentForm({ ideaId }) {
         });
 
         form.reset();
+        router.refresh();
       } else {
         const errorData = await res.json().catch(() => null);
         toast.error(errorData?.message || "Failed to post comment", {

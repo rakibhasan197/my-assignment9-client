@@ -57,7 +57,7 @@ const IdeasDetailsPage = async ({ params }) => {
         <CommentForm ideaId={idea._id || idea.id || id} />
       </div>
       <div>
-        <GetCommentForm></GetCommentForm>
+        <GetCommentForm ideaId={idea._id || idea.id || id}></GetCommentForm>
       </div>
 
     </div>
