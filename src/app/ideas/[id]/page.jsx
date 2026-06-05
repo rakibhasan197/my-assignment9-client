@@ -1,4 +1,5 @@
 import CommentForm from "@/components/CommentForm";
+import { DeleteModal } from "@/components/DeleteModal";
 import GetCommentForm from "@/components/GetCommentForm";
 import Image from "next/image";
 
@@ -59,6 +60,7 @@ const IdeasDetailsPage = async ({ params }) => {
       <div>
         <GetCommentForm ideaId={idea._id || idea.id || id}></GetCommentForm>
       </div>
+     
 
     </div>
   );

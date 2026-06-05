@@ -1,5 +1,6 @@
 import React from 'react';
 import { EditCommentModal } from './EditCommentModal';
+import { DeleteModal } from './DeleteModal';
 
 const GetCommentForm = async ({ ideaId }) => {
   const res = await fetch(
@@ -42,6 +43,9 @@ const GetCommentForm = async ({ ideaId }) => {
            <div>
               <EditCommentModal comment={comment} />
             </div>
+             <div>
+        <DeleteModal comment={comment}></DeleteModal>
+      </div>
           </div>
         ))}
         

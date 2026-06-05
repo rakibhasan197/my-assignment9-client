@@ -1,24 +1,61 @@
 'use client';
 import { Button, FieldError, Input, Label, ListBox, TextArea, TextField, Select } from '@heroui/react';
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { authClient } from '@/lib/auth-client';
 
 const AddIdeaPage = () => {
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+  const [submitting, setSubmitting] = React.useState(false);
+
   const onSubmit = async (e)=> {
     e.preventDefault();
+    const form = e.currentTarget;
 
-    const formData = new FormData(e.currentTarget);
-    const ideaData = Object.fromEntries(formData.entries())
-    console.log(ideaData);
+    if (!session?.user?.email) {
+      toast.error("Please login before adding an idea");
+      router.push("/login");
+      return;
+    }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ideas`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(ideaData),
-    })
-    const data = await res.json();
-    console.log(data);
+    const formData = new FormData(form);
+    const ideaData = Object.fromEntries(formData.entries());
+    ideaData.imageURL = ideaData.imageUrl;
+    delete ideaData.imageUrl;
+    ideaData.userEmail = session.user.email;
+    ideaData.userName = session.user.name || "";
+    ideaData.userImage = session.user.image || "";
+
+    setSubmitting(true);
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ideas`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ideaData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data?.message || "Failed to add idea");
+        return;
+      }
+
+      toast.success("Idea added successfully");
+      form.reset();
+      router.push("/ideas");
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    } finally {
+      setSubmitting(false);
+    }
   }
   return (
     <div className="container mx-auto px-4 py-10">
@@ -125,8 +162,8 @@ const AddIdeaPage = () => {
   </div>
 
   {/* Submit Button */}
-  <Button type="submit" className="w-full bg-blue-600 text-white py-6">
-    Submit Idea
+  <Button type="submit" isDisabled={isPending || submitting} className="w-full bg-blue-600 text-white py-6">
+    {submitting ? "Submitting..." : "Submit Idea"}
   </Button>
 
 </form>
