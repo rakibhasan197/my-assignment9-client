@@ -5,10 +5,12 @@ import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { Spinner } from "@heroui/react";
 
 const MyIdeasPage = () => {
   const { data: session, isPending } = authClient.useSession();
   const userEmail = session?.user?.email;
+
   const [ideas, setIdeas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -16,20 +18,23 @@ const MyIdeasPage = () => {
   useEffect(() => {
     if (isPending) return;
     if (!userEmail) return;
-  
 
     const fetchMyIdeas = async () => {
       setLoading(true);
       setError("");
+
       try {
-          const {data: tokenData} = await authClient.token()
-          console.log(tokenData)
+        const { data: tokenData } = await authClient.token?.() || {};
+
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/my-ideas?email=${encodeURIComponent(userEmail)}`,{
+          `${process.env.NEXT_PUBLIC_API_URL}/my-ideas?email=${encodeURIComponent(userEmail)}`,
+          {
             headers: {
-              authorization: `Bearer ${tokenData?.token}`
-            }
-          } 
+              authorization: tokenData?.token
+                ? `Bearer ${tokenData.token}`
+                : "",
+            },
+          }
         );
 
         const data = await res.json();
@@ -51,16 +56,18 @@ const MyIdeasPage = () => {
     fetchMyIdeas();
   }, [isPending, userEmail]);
 
+  // 🔥 HERO UI LOADING SPINNER
   if (isPending || (userEmail && loading)) {
     return (
-      <div className="text-center py-10">
-        Loading...
+      <div className="flex justify-center items-center py-20">
+        <Spinner size="lg" />
       </div>
     );
   }
 
   return (
     <div className="container mx-auto px-4 py-10">
+
       <h1 className="text-3xl font-bold mb-8 text-center">
         My Ideas
       </h1>
@@ -82,6 +89,7 @@ const MyIdeasPage = () => {
         </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
           {ideas.map((idea) => (
             <div
               key={idea._id}
@@ -114,6 +122,7 @@ const MyIdeasPage = () => {
               </div>
             </div>
           ))}
+
         </div>
       )}
     </div>

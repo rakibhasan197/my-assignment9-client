@@ -12,7 +12,7 @@ export default function IdeasPage() {
   const [loading, setLoading] = useState(false);
 
   const fetchIdeas = async () => {
-    setLoading(true); // 🔥 start loading
+    setLoading(true);
 
     try {
       const params = new URLSearchParams();
@@ -27,7 +27,7 @@ export default function IdeasPage() {
       const data = await res.json();
       setIdeas(data);
     } finally {
-      setLoading(false); // 🔥 stop loading
+      setLoading(false);
     }
   };
 
@@ -47,7 +47,7 @@ export default function IdeasPage() {
         Explore Startup Ideas
       </h1>
 
-      {/* SEARCH + CATEGORY */}
+    
       <div className="mb-8 grid gap-4 md:grid-cols-2">
 
         <input
@@ -58,33 +58,31 @@ export default function IdeasPage() {
           className="w-full rounded border px-3 py-2"
         />
 
+      
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className="w-full rounded border px-3 py-2"
         >
           <option value="">All Category</option>
-          <option value="AI">AI</option>
-          <option value="Startup">Startup</option>
-          <option value="App">App</option>
-          <option value="Web">Web</option>
+          <option value="tech">Tech</option>
+          <option value="health">Health</option>
+          <option value="ai">AI</option>
+          <option value="education">Education</option>
+          <option value="finance">Finance</option>
+          <option value="lifestyle">Lifestyle</option>
         </select>
 
       </div>
 
-      {/* LOADING UI */}
+      {/* LOADING */}
       {loading ? (
         <div className="flex justify-center items-center py-20">
           <Spinner size="lg" />
         </div>
       ) : ideas.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <h2 className="text-2xl font-bold text-gray-700">
-            No Ideas Found 😢
-          </h2>
-          <p className="text-gray-500 mt-2">
-            Try another search or category
-          </p>
+        <div className="text-center py-20 text-gray-500">
+          No Ideas Found 😢
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -3,8 +3,8 @@
 import { authClient } from "@/lib/auth-client";
 import { Avatar, Button } from "@heroui/react";
 import Link from "next/link";
-import { useState } from "react";
-import { FiMenu, FiX, FiMoreVertical } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { FiMenu, FiX, FiMoreVertical, FiSun, FiMoon } from "react-icons/fi";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -19,8 +19,28 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
+  // 🌙 Theme state
+  const [theme, setTheme] = useState("light");
+
   const { data: session } = authClient.useSession();
   const user = session?.user;
+
+  // Load theme
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }, []);
+
+  // Toggle theme
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
 
   const handleLogOut = async () => {
     await authClient.signOut();
@@ -48,14 +68,14 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
       <nav className="container mx-auto flex items-center justify-between px-4 py-4">
 
-    
+        {/* LOGO */}
         <Link href="/">
           <h2 className="text-2xl font-black text-white">
             Idea<span className="text-blue-500">Vault</span>
           </h2>
         </Link>
 
-        
+        {/* NAV LINKS */}
         <ul className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
@@ -69,8 +89,17 @@ const Navbar = () => {
           ))}
         </ul>
 
-      
+        {/* RIGHT SIDE */}
         <div className="hidden items-center gap-3 md:flex">
+
+          {/* 🌙 THEME TOGGLE */}
+          <button
+            onClick={toggleTheme}
+            className="text-xl text-white"
+          >
+            {theme === "light" ? <FiMoon /> : <FiSun />}
+          </button>
+
           {user ? (
             <div className="relative flex items-center gap-2">
 
@@ -130,7 +159,7 @@ const Navbar = () => {
           )}
         </div>
 
-       
+        {/* MOBILE MENU BUTTON */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="text-2xl text-white md:hidden"
@@ -139,60 +168,38 @@ const Navbar = () => {
         </button>
       </nav>
 
-     
+      {/* MOBILE MENU */}
       {mobileOpen && (
         <div className="md:hidden border-t border-slate-800 bg-slate-950">
           <div className="flex flex-col gap-2 px-4 py-5">
 
+            {/* LINKS */}
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-3 text-white text-sm font-medium hover:bg-slate-800 hover:text-blue-400"
+                className="rounded-lg px-3 py-3 text-sm font-medium text-white hover:bg-slate-800 hover:text-blue-400"
               >
                 {link.label}
               </Link>
             ))}
 
-            <div className="mt-4 flex flex-col gap-2 border-t border-slate-800 pt-4">
-
-              {user ? (
-                <button
-                  onClick={handleLogOut}
-                  className="w-full rounded bg-red-500/10 px-3 py-3 text-sm text-red-400 hover:bg-red-500/20"
-                >
-                  Logout
-                </button>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    onClick={() => setMobileOpen(false)}
-                    className="w-full rounded bg-slate-800 px-3 py-3 text-center text-sm text-white hover:bg-slate-700"
-                  >
-                    Login
-                  </Link>
-
-                  <Link
-                    href="/register"
-                    onClick={() => setMobileOpen(false)}
-                    className="w-full rounded bg-blue-600 px-3 py-3 text-center text-sm text-white hover:bg-blue-700"
-                  >
-                    Register
-                  </Link>
-                </>
-              )}
-
-            </div>
+            {/* 🌙 MOBILE THEME TOGGLE */}
+            <button
+              onClick={toggleTheme}
+              className="w-full rounded bg-slate-800 px-3 py-3 text-sm text-white hover:bg-slate-700"
+            >
+              {theme === "light" ? "Dark Mode" : "Light Mode"}
+            </button>
 
           </div>
         </div>
       )}
 
-     
+      {/* MODAL */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 mt-30 flex items-center justify-center bg-white/60 p-4">
+        <div className="fixed inset-0 z-50 mt-30 flex items-center justify-center bg-black/60 p-4">
 
           <div className="w-full max-w-lg rounded-lg bg-slate-900 p-6 max-h-[90vh] overflow-y-auto">
 
