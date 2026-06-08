@@ -5,7 +5,10 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
 
+
+
 const fetchIdeaDetails = async (id) => {
+
 
   const {token} = await auth.api.getToken({
     headers: await headers()
