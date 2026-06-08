@@ -67,7 +67,7 @@ const AddIdeaPage = () => {
 
   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-    {/* Idea Title */}
+
     <div className="md:col-span-2">
       <TextField name="title" isRequired>
         <Label>Idea Title</Label>
@@ -76,7 +76,7 @@ const AddIdeaPage = () => {
       </TextField>
     </div>
 
-    {/* Short Description */}
+
     <div className="md:col-span-2">
       <TextField name="shortDescription" isRequired>
         <Label>Short Description</Label>
@@ -85,7 +85,7 @@ const AddIdeaPage = () => {
       </TextField>
     </div>
 
-    {/* Detailed Description */}
+
     <div className="md:col-span-2">
       <TextField name="detailedDescription" isRequired>
         <Label>Detailed Description</Label>
@@ -94,7 +94,6 @@ const AddIdeaPage = () => {
       </TextField>
     </div>
 
-    {/* Category */}
     <div>
       <Label>Category</Label>
       <Select name="category" isRequired placeholder="Select category">
@@ -116,35 +115,35 @@ const AddIdeaPage = () => {
       </Select>
     </div>
 
-    {/* Tags */}
+   
     <TextField name="tags">
       <Label>Tags (Optional)</Label>
       <Input placeholder="e.g. AI, startup, productivity" />
       <FieldError />
     </TextField>
 
-    {/* Image URL */}
+
     <TextField name="imageUrl" isRequired>
       <Label>Image URL</Label>
       <Input placeholder="https://example.com/image.jpg" />
       <FieldError />
     </TextField>
 
-    {/* Estimated Budget */}
+   
     <TextField name="estimatedBudget">
       <Label>Estimated Budget (Optional)</Label>
       <Input type="number" placeholder="e.g. 5000" />
       <FieldError />
     </TextField>
 
-    {/* Target Audience */}
+   
     <TextField name="targetAudience" isRequired>
       <Label>Target Audience</Label>
       <Input placeholder="e.g. Students, Developers, Entrepreneurs" />
       <FieldError />
     </TextField>
 
-    {/* Problem Statement */}
+   
     <div className="md:col-span-2">
       <TextField name="problemStatement" isRequired>
         <Label>Problem Statement</Label>
@@ -153,7 +152,7 @@ const AddIdeaPage = () => {
       </TextField>
     </div>
 
-    {/* Proposed Solution */}
+  
     <div className="md:col-span-2">
       <TextField name="proposedSolution" isRequired>
         <Label>Proposed Solution</Label>
@@ -164,7 +163,7 @@ const AddIdeaPage = () => {
 
   </div>
 
-  {/* Submit Button */}
+
   <Button type="submit" isDisabled={isPending || submitting} className="w-full bg-blue-600 text-white py-6">
     {submitting ? "Submitting..." : "Submit Idea"}
   </Button>

@@ -42,7 +42,7 @@ export default function IdeasPage() {
   return (
     <div className="container mx-auto px-4 py-10">
 
-      {/* TITLE */}
+     
       <h1 className="text-3xl font-bold text-center mb-6">
         Explore Startup Ideas
       </h1>
@@ -75,7 +75,7 @@ export default function IdeasPage() {
 
       </div>
 
-      {/* LOADING */}
+     
       {loading ? (
         <div className="flex justify-center items-center py-20">
           <Spinner size="lg" />

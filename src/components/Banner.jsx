@@ -60,7 +60,7 @@ const Banner = () => {
           }`}
         >
           
-          {/* Background Image */}
+         
           <Image
             src={slide.image}
             alt={slide.title}
@@ -69,10 +69,10 @@ const Banner = () => {
             className="object-cover"
           />
 
-          {/* Overlay */}
+        
           <div className="absolute inset-0 bg-black/60"></div>
 
-          {/* Content */}
+       
           <div className="relative z-20 flex h-full items-center">
             
             <div className="container mx-auto px-4">
@@ -104,7 +104,7 @@ const Banner = () => {
         </div>
       ))}
 
-      {/* Dots */}
+      
       <div className="absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 gap-3">
         
         {slides.map((_, index) => (

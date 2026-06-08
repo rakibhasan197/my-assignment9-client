@@ -12,7 +12,7 @@ const Footer = () => {
       
       <div className="container mx-auto grid gap-10 px-4 py-12 md:grid-cols-3">
         
-        {/* Brand */}
+       
         <div>
           <h2 className="text-2xl font-black text-white">
             Idea<span className="text-blue-500">Vault</span>
@@ -24,7 +24,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Platform Links */}
         <div>
           <h3 className="mb-4 text-lg font-semibold text-white">
             Platform Links
@@ -69,7 +68,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Contact & Social */}
         <div>
           <h3 className="mb-4 text-lg font-semibold text-white">
             Contact Info
@@ -81,7 +79,7 @@ const Footer = () => {
             <p>Location: Dhaka, Bangladesh</p>
           </div>
 
-          {/* Social Links */}
+       
           <div className="mt-6 flex items-center gap-4">
             <Link
               href="https://facebook.com"
@@ -118,7 +116,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Footer */}
+  
       <div className="border-t border-slate-800 py-5 text-center text-sm text-slate-500">
         © {new Date().getFullYear()} IdeaVault. All rights reserved.
       </div>

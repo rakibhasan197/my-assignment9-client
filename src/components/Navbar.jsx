@@ -19,20 +19,19 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // 🌙 Theme state
+ 
   const [theme, setTheme] = useState("light");
 
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
-  // Load theme
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
     document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
 
-  // Toggle theme
+
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
 
@@ -68,14 +67,14 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
       <nav className="container mx-auto flex items-center justify-between px-4 py-4">
 
-        {/* LOGO */}
+       
         <Link href="/">
           <h2 className="text-2xl font-black text-white">
             Idea<span className="text-blue-500">Vault</span>
           </h2>
         </Link>
 
-        {/* NAV LINKS */}
+       
         <ul className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
@@ -89,10 +88,10 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* RIGHT SIDE */}
+      
         <div className="hidden items-center gap-3 md:flex">
 
-          {/* 🌙 THEME TOGGLE */}
+       
           <button
             onClick={toggleTheme}
             className="text-xl text-white"
@@ -159,7 +158,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* MOBILE MENU BUTTON */}
+     
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="text-2xl text-white md:hidden"
@@ -168,12 +167,11 @@ const Navbar = () => {
         </button>
       </nav>
 
-      {/* MOBILE MENU */}
+   
       {mobileOpen && (
         <div className="md:hidden border-t border-slate-800 bg-slate-950">
           <div className="flex flex-col gap-2 px-4 py-5">
 
-            {/* LINKS */}
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -185,7 +183,6 @@ const Navbar = () => {
               </Link>
             ))}
 
-            {/* 🌙 MOBILE THEME TOGGLE */}
             <button
               onClick={toggleTheme}
               className="w-full rounded bg-slate-800 px-3 py-3 text-sm text-white hover:bg-slate-700"
@@ -197,7 +194,7 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* MODAL */}
+    
       {modalOpen && (
         <div className="fixed inset-0 z-50 mt-30 flex items-center justify-center bg-black/60 p-4">
 

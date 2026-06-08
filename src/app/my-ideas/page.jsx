@@ -56,7 +56,7 @@ const MyIdeasPage = () => {
     fetchMyIdeas();
   }, [isPending, userEmail]);
 
-  // 🔥 HERO UI LOADING SPINNER
+  
   if (isPending || (userEmail && loading)) {
     return (
       <div className="flex justify-center items-center py-20">
