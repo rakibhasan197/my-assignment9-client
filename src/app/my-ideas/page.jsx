@@ -16,13 +16,20 @@ const MyIdeasPage = () => {
   useEffect(() => {
     if (isPending) return;
     if (!userEmail) return;
+  
 
     const fetchMyIdeas = async () => {
       setLoading(true);
       setError("");
       try {
+          const {data: tokenData} = await authClient.token()
+          console.log(tokenData)
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/my-ideas?email=${encodeURIComponent(userEmail)}`
+          `${process.env.NEXT_PUBLIC_API_URL}/my-ideas?email=${encodeURIComponent(userEmail)}`,{
+            headers: {
+              authorization: `Bearer ${tokenData?.token}`
+            }
+          } 
         );
 
         const data = await res.json();

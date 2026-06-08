@@ -1,10 +1,23 @@
 import CommentForm from "@/components/CommentForm";
 import { DeleteModal } from "@/components/DeleteModal";
 import GetCommentForm from "@/components/GetCommentForm";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import Image from "next/image";
 
 const fetchIdeaDetails = async (id) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ideas/${id}`);
+
+  const {token} = await auth.api.getToken({
+    headers: await headers()
+  })
+  console.log(token)
+
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ideas/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  });
 
 
 
