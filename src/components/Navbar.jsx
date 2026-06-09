@@ -233,7 +233,7 @@ const Navbar = () => {
 
      
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+        <div className="fixed inset-0 z-50 flex mt-40 items-center justify-center bg-black/60 p-4">
 
           <div className="w-full max-w-lg rounded-lg bg-slate-900 p-6">
 
