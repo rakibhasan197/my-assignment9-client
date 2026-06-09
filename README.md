@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 💡 IdeaVault – Startup Idea Sharing Platform
 
-## Getting Started
+## 🌐 Live Site
+https://your-live-site-link.com
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📌 Project Description
+IdeaVault is a web-based startup idea sharing platform where users can post innovative startup ideas, explore ideas from others, and interact through comments and discussions. The platform encourages creativity, collaboration, and validation of ideas through community feedback.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 🔐 Secure authentication system using JWT (Email & Google login support)
+- 💡 Users can create, update, and delete startup ideas
+- 🌍 Explore all ideas in a clean 3-column responsive grid layout
+- 💬 Comment system with edit and delete functionality for users
+- 📊 Trending ideas section based on recent activity
+- 🔎 Search ideas by title (case-insensitive)
+- 🏷️ Filter ideas by category
+- 👤 Private routes for authenticated users (Add Idea, My Ideas, My Interactions)
+- 🌗 Dark/Light theme toggle for better user experience
+- 📱 Fully responsive design for mobile, tablet, and desktop
+- ⚡ Loading spinner for smooth UX during data fetching
+- 🔔 Toast notifications for all CRUD operations and authentication events
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend
+- Next.js (App Router)
+- Tailwind CSS
+- React Hook Form
+- React Toastify
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JSON Web Token (JWT)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📂 Main Modules
+
+- Authentication (Login / Register / Google Login)
+- Idea Management (CRUD operations)
+- Comment System (CRUD per user)
+- Profile Management
+- Search & Filter System
+- Protected Routes with JWT
+
+---
+
+## 🔐 Authentication Features
+
+- User registration with validation (password strength required)
+- Secure login with JWT token generation
+- Persistent login using local storage
+- Protected routes for authenticated users only
+
+---
+
+## 📱 Responsive Design
+
+IdeaVault is fully responsive and works smoothly on:
+- Mobile devices
+- Tablets
+- Desktop screens
+
+---
+
+## ⚠️ Important Notes
+
+- No lorem ipsum text used anywhere in the project
+- All error and success messages are handled using toast notifications
+- Page reload does not break authentication or routes
+- Clean UI with consistent spacing and design system
+
+---
+
+## 🚀 Deployment
+
+- Client: Vercel
+- Server: Render / Railway
+- Database: MongoDB Atlas
+
+---
+
+## 👨‍💻 Author
+Developed as part of CAT_01 Assignment – IdeaVault Project
