@@ -5,6 +5,7 @@ import { Avatar, Button } from "@heroui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FiMenu, FiX, FiMoreVertical, FiSun, FiMoon } from "react-icons/fi";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -18,9 +19,9 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-
- 
   const [theme, setTheme] = useState("light");
+
+  const pathname = usePathname();
 
   const { data: session } = authClient.useSession();
   const user = session?.user;
@@ -31,13 +32,10 @@ const Navbar = () => {
     document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
 
-
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
-
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
-
     document.documentElement.classList.toggle("dark", newTheme === "dark");
   };
 
@@ -45,11 +43,11 @@ const Navbar = () => {
     await authClient.signOut();
     setMenuOpen(false);
     setMobileOpen(false);
+    setModalOpen(false);
   };
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-
     const form = e.target;
 
     const name = form.name.value;
@@ -67,20 +65,23 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
       <nav className="container mx-auto flex items-center justify-between px-4 py-4">
 
-       
+     
         <Link href="/">
           <h2 className="text-2xl font-black text-white">
             Idea<span className="text-blue-500">Vault</span>
           </h2>
         </Link>
 
-       
         <ul className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-sm font-medium text-slate-300 hover:text-blue-400"
+                className={`text-sm font-medium transition ${
+                  pathname === link.href
+                    ? "text-blue-400"
+                    : "text-slate-300 hover:text-blue-400"
+                }`}
               >
                 {link.label}
               </Link>
@@ -88,14 +89,9 @@ const Navbar = () => {
           ))}
         </ul>
 
-      
         <div className="hidden items-center gap-3 md:flex">
 
-       
-          <button
-            onClick={toggleTheme}
-            className="text-xl text-white"
-          >
+          <button onClick={toggleTheme} className="text-xl text-white">
             {theme === "light" ? <FiMoon /> : <FiSun />}
           </button>
 
@@ -103,7 +99,7 @@ const Navbar = () => {
             <div className="relative flex items-center gap-2">
 
               <Avatar>
-                <Avatar.Image referrerPolicy="no-referrer" src={user?.image} />
+                <Avatar.Image src={user?.image} referrerPolicy="no-referrer" />
                 <Avatar.Fallback>{user?.name?.charAt(0)}</Avatar.Fallback>
               </Avatar>
 
@@ -141,7 +137,6 @@ const Navbar = () => {
 
                 </div>
               )}
-
             </div>
           ) : (
             <>
@@ -158,16 +153,29 @@ const Navbar = () => {
           )}
         </div>
 
-     
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="text-2xl text-white md:hidden"
-        >
-          {mobileOpen ? <FiX /> : <FiMenu />}
-        </button>
+      
+        <div className="flex items-center gap-3 md:hidden">
+
+          {user && (
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="text-xl text-white"
+            >
+              <FiMoreVertical />
+            </button>
+          )}
+
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="text-2xl text-white"
+          >
+            {mobileOpen ? <FiX /> : <FiMenu />}
+          </button>
+        </div>
+
       </nav>
 
-   
+      {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden border-t border-slate-800 bg-slate-950">
           <div className="flex flex-col gap-2 px-4 py-5">
@@ -195,10 +203,39 @@ const Navbar = () => {
       )}
 
     
-      {modalOpen && (
-        <div className="fixed inset-0 z-50 mt-30 flex items-center justify-center bg-black/60 p-4">
+      {menuOpen && user && (
+        <div className="md:hidden absolute right-4 top-16 w-52 rounded-lg border border-slate-700 bg-slate-900 shadow-xl">
 
-          <div className="w-full max-w-lg rounded-lg bg-slate-900 p-6 max-h-[90vh] overflow-y-auto">
+          <div className="border-b border-slate-700 p-3">
+            <p className="text-sm font-medium text-white">{user?.name}</p>
+            <p className="text-xs text-slate-400 break-all">{user?.email}</p>
+          </div>
+
+          <button
+            onClick={() => {
+              setModalOpen(true);
+              setMenuOpen(false);
+            }}
+            className="block w-full px-4 py-3 text-left text-sm text-slate-300 hover:bg-slate-800"
+          >
+            Edit Profile
+          </button>
+
+          <button
+            onClick={handleLogOut}
+            className="w-full px-4 py-3 text-left text-sm text-red-400 hover:bg-slate-800"
+          >
+            Logout
+          </button>
+
+        </div>
+      )}
+
+     
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+
+          <div className="w-full max-w-lg rounded-lg bg-slate-900 p-6">
 
             <h2 className="mb-4 text-xl font-bold text-white">
               Edit Profile
@@ -210,19 +247,13 @@ const Navbar = () => {
                 name="name"
                 defaultValue={user?.name}
                 className="w-full rounded bg-slate-800 p-2 text-white"
-                placeholder="Name"
               />
 
               <input
                 name="image"
                 defaultValue={user?.image}
                 className="w-full rounded bg-slate-800 p-2 text-white"
-                placeholder="Image URL"
               />
-
-              <p className="text-xs text-slate-400 break-all">
-                {user?.email}
-              </p>
 
               <div className="flex justify-end gap-2">
                 <button
